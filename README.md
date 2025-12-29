@@ -1,3 +1,4 @@
+
 TaC Engine — "Transition as Collateral"
 Transforming verified sustainability progress into hard financial value
 sustainablereview.comeducba.comthinklandscape.globallandscapesforum.orgthrivabilitymatters.org
@@ -9,7 +10,7 @@ Key Features
 Verification Agent: Uses Gemini with Google Search Grounding to validate sustainability claims in real-time (e.g., carbon removal deals).
 Visual Agent: Generative image editing to visualize future-site improvements (e.g., adding solar panels to uploaded imagery).
 Credit Simulator: Risk Offset Formula that translates verified impact into lower interest rates and unlocked credit capacity.
-Audit Trail & Dashboard: Persistent in-memory database tracking verifications, scores, and collateral value.
+Audit Trail \& Dashboard: Persistent in-memory database tracking verifications, scores, and collateral value.
 Persona-Based Onboarding: Borrower/lender roles with contextual data persistence.
 
 unepfi.orgrbc.com
@@ -34,7 +35,7 @@ Installation
 Clone the repository:Bashgit clone https://github.com/your-username/tac-engine.git
 cd tac-engine
 Install dependencies:Bashnpm install
-Create a .env file in the root directory:textVITE_API_KEY=AIzaSy...your-gemini-api-key-here
+Create a .env file in the root directory:textVITE\_API\_KEY=AIzaSy...your-gemini-api-key-here
 Run the development server:Bashnpm run dev
 Open http://localhost:5173 in your browser.
 
@@ -56,7 +57,7 @@ Navigate to "Verify Impact".
 Paste prompt:
 "Verify that Microsoft has signed a carbon removal agreement with Heirloom Carbon to purchase 315,000 metric tons of CO2 removal."
 Click "Initiate Verification" → See grounded summary + citations.
-(Boosts Sustainability Score & Collateral Value.)
+(Boosts Sustainability Score \& Collateral Value.)
 
 Phase 3: Site Imagery
 
@@ -88,4 +89,5 @@ License
 MIT License – feel free to fork and build upon.
 
 TaC Engine – Making sustainability bankable. 🌱💰
-For questions, reach out via issues or [your contact].
+For questions, reach out via issues or \[your contact].
+
