@@ -1,13 +1,11 @@
-// src/services/geminiService.ts
-import { GoogleGenAI } from "@google/genai"; // Keep this – it's the correct current SDK
-import { VerificationResult, GroundingChunk } from "../types";
+import { GoogleGenAI } from "@google/genai";
+import type { VerificationResult, GroundingChunk } from "../types";
 
-// Get API key the Vite way
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
+// Get API key from environment
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
 
 if (!apiKey) {
-  console.error("VITE_GEMINI_API_KEY is missing! Check your .env file.");
-  throw new Error("API key not configured");
+  console.warn("VITE_GEMINI_API_KEY is not set. API calls will fail.");
 }
 
 // Initialize client
@@ -20,69 +18,43 @@ export const verifySustainabilityClaim = async (
   query: string
 ): Promise<VerificationResult> => {
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash", // UPDATED: Current stable fast model (Dec 2025)
-      contents: `Verify this sustainability claim using recent data: "${query}". 
-      Provide a concise summary and list key sources.`,
-      tools: functions ? [{ functionDeclarations: functions }] : undefined,
+    // Use relative path for production/development
+    const API_URL = import.meta.env.PROD ? '' : 'http://localhost:3001';
+    
+    const response = await fetch(`${API_URL}/api/gemini-proxy`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ claim: query })
     });
 
-    const text = response.text ?? "No response text.";
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
 
-    // Extract sources
-    const groundingChunks = response.candidates?.[0]?.groundingMetadata
-      ?.groundingChunks as GroundingChunk[] | undefined;
-
-    const sources =
-      groundingChunks
-        ?.map((chunk) => ({
-          uri: chunk.web?.uri ?? "",
-          title: chunk.web?.title ?? "Unknown Source",
-        }))
-        .filter((s) => s.uri) ?? [];
-
-    const uniqueSources = Array.from(
-      new Map(sources.map((s) => [s.uri, s])).values()
-    );
-
-    return { text, sources: uniqueSources };
+    const data = await response.json();
+    
+    // Convert the proxy response to your expected format
+    return {
+      text: data.justification || "No response received.",
+      sources: [] // The proxy doesn't provide sources yet
+    };
   } catch (error: any) {
     console.error("Verification Error:", error);
-    throw new Error(`Verification failed: ${error.message || "Unknown error"}`);
+    return {
+      text: `Error: ${error.message}`,
+      sources: []
+    };
   }
 };
 
 /**
- * Edit project image (note: gemini-2.5-flash supports basic image input/editing)
+ * Edit project image (placeholder - implement as needed)
  */
 export const editProjectImage = async (
   base64Image: string,
   prompt: string
 ): Promise<string> => {
-  try {
-    const mimeType = base64Image.startsWith("data:image/png")
-      ? "image/png"
-      : "image/jpeg";
-    const cleanBase64 = base64Image.replace(/^data:image\/\w+;base64,/, "");
-
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash", // Same model works for image tasks
-      contents: [
-        { inlineData: { data: cleanBase64, mimeType } },
-        { text: prompt },
-      ],
-    });
-
-    const parts = response.candidates?.[0]?.content?.parts ?? [];
-    for (const part of parts) {
-      if (part.inlineData?.data) {
-        return `data:image/png;base64,${part.inlineData.data}`;
-      }
-    }
-
-    throw new Error("No image returned");
-  } catch (error: any) {
-    console.error("Image Edit Error:", error);
-    throw new Error(`Image edit failed: ${error.message}`);
-  }
+  // This is a placeholder - implement actual image editing
+  console.log("Image editing called", { base64Image: base64Image.substring(0, 50), prompt });
+  return base64Image; // Return original for now
 };
