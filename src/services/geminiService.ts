@@ -24,7 +24,7 @@ export const verifySustainabilityClaim = async (
       model: "gemini-2.5-flash", // UPDATED: Current stable fast model (Dec 2025)
       contents: `Verify this sustainability claim using recent data: "${query}". 
       Provide a concise summary and list key sources.`,
-      toolConfig: { googleSearchRetrieval: {} }, // Enables grounding
+      tools: functions ? [{ functionDeclarations: functions }] : undefined,
     });
 
     const text = response.text ?? "No response text.";
