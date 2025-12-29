@@ -50,11 +50,11 @@ export default async function handler(
       });
     }
 
-    const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ 
-      model: "gemini-2.0-flash-exp",
-      systemInstruction: "You are a sustainability verification expert analyzing claims for accuracy, credibility, and alignment with ESG standards."
-    });
+    const genAI = new GoogleGenAI({ apiKey: API_KEY });
+const model = genAI.getGenerativeModel({ 
+  model: "gemini-2.0-flash-exp",
+  systemInstruction: "..."
+});
 
     const prompt = `Verify this sustainability claim: "${claim}"${context ? `\n\nContext: ${context}` : ''}`;
 
