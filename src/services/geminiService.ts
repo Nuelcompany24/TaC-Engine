@@ -1,15 +1,12 @@
+// src/services/geminiService.ts
 import { GoogleGenAI } from "@google/genai";
 import type { VerificationResult, GroundingChunk } from "../types";
 
 // Get API key from environment
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
 
-if (!apiKey) {
-  console.warn("VITE_GEMINI_API_KEY is not set. API calls will fail.");
-}
-
 // Initialize client
-const ai = new GoogleGenAI({ apiKey });
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 /**
  * Verify sustainability claim with search grounding
@@ -18,13 +15,18 @@ export const verifySustainabilityClaim = async (
   query: string
 ): Promise<VerificationResult> => {
   try {
-    // Use relative path for production/development
-    const API_URL = import.meta.env.PROD ? '' : 'http://localhost:3001';
+    // In production, use Vercel serverless function
+    // In development, use local server or mock
+    const isProd = import.meta.env.PROD;
+    const baseURL = isProd ? '' : 'http://localhost:3001';
     
-    const response = await fetch(`${API_URL}/api/gemini-proxy`, {
+    const response = await fetch(`${baseURL}/api/gemini-proxy`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ claim: query })
+      body: JSON.stringify({ 
+        claim: query,
+        context: "Please verify this sustainability claim with recent data and provide credible sources."
+      })
     });
 
     if (!response.ok) {
@@ -35,13 +37,13 @@ export const verifySustainabilityClaim = async (
     
     // Convert the proxy response to your expected format
     return {
-      text: data.justification || "No response received.",
-      sources: [] // The proxy doesn't provide sources yet
+      text: data.justification || data.message || "No verification response received.",
+      sources: [] // The proxy doesn't provide sources yet, but you could map them
     };
   } catch (error: any) {
     console.error("Verification Error:", error);
     return {
-      text: `Error: ${error.message}`,
+      text: `Error: ${error.message || "Network or server error. Please try again."}`,
       sources: []
     };
   }
@@ -54,7 +56,15 @@ export const editProjectImage = async (
   base64Image: string,
   prompt: string
 ): Promise<string> => {
-  // This is a placeholder - implement actual image editing
-  console.log("Image editing called", { base64Image: base64Image.substring(0, 50), prompt });
-  return base64Image; // Return original for now
+  try {
+    // For now, return a mock image or the original
+    console.log("Image editing called", { prompt, imageSize: base64Image.length });
+    
+    // If you have an image editing API, implement it here
+    // For now, return a placeholder
+    return base64Image; // Return original as placeholder
+  } catch (error: any) {
+    console.error("Image Edit Error:", error);
+    throw new Error(`Image edit failed: ${error.message}`);
+  }
 };
