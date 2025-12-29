@@ -94,7 +94,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, onViewChange, user
       <div className="mt-auto p-4 border-t border-slate-800 bg-slate-900/50">
         <div className="flex items-center gap-3 mb-4">
           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-xs">
-            {user?.name.charAt(0) || 'U'}
+            {(user?.name || 'User').charAt(0)}
           </div>
           <div className="flex-1 min-w-0">
             <div className="text-sm font-medium text-white truncate">{user?.name || 'Guest'}</div>
