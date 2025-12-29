@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleGenAI } from "@google/genai";
-import cors from 'cors';
+const cors = require('cors');  // Use require() instead of import
 
 // Initialize CORS middleware
 const corsMiddleware = cors({
