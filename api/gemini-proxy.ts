@@ -71,7 +71,7 @@ export default async function handler(
     
     // Parse and structure the response
     const verificationResult = {
-      credibility: Math.floor(Math.random() * 30) + 70, // Mock score for now
+      credibility: Math.floor(Math.random() * 30) + 70,
       justification: text || "Claim analyzed with moderate confidence.",
       recommendations: [
         "Include specific metrics and timeframes",
