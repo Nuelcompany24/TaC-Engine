@@ -3,7 +3,7 @@ import { GoogleGenAI } from "@google/genai"; // Keep this – it's the correct c
 import { VerificationResult, GroundingChunk } from "../types";
 
 // Get API key the Vite way
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
 
 if (!apiKey) {
   console.error("VITE_GEMINI_API_KEY is missing! Check your .env file.");
