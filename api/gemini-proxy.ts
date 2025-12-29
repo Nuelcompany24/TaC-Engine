@@ -1,6 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-// Use this import for the latest version
-import { GoogleGenAI } from "@google/genai";  // Changed from GoogleGenerativeAI to GoogleGenAI
+import { GoogleGenAI } from "@google/genai";
 import cors from 'cors';
 
 // Initialize CORS middleware
@@ -51,10 +50,10 @@ export default async function handler(
     }
 
     const genAI = new GoogleGenAI({ apiKey: API_KEY });
-const model = genAI.getGenerativeModel({ 
-  model: "gemini-2.0-flash-exp",
-  systemInstruction: "..."
-});
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-2.0-flash-exp",
+      systemInstruction: "You are a sustainability verification expert analyzing claims for accuracy, credibility, and alignment with ESG standards."
+    });
 
     const prompt = `Verify this sustainability claim: "${claim}"${context ? `\n\nContext: ${context}` : ''}`;
 
