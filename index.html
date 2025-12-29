@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaC Engine | Sustainability Verification System</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              "tac-primary": "#059669",
+              "tac-secondary": "#0891b2",
+              "tac-dark": "#0f172a",
+              "tac-card": "#1e293b",
+              "tac-glass": "rgba(30, 41, 59, 0.6)",
+            },
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+            },
+            backdropBlur: {
+              xs: "2px",
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      body {
+        background-color: #0f172a;
+        color: #e2e8f0;
+      }
+
+      .animated-bg {
+        background: linear-gradient(-45deg, #0f172a, #1e293b, #334155, #02281a);
+        background-size: 400% 400%;
+        animation: gradient 20s ease infinite;
+      }
+
+      @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      .glass-card {
+        background: rgba(30, 41, 59, 0.6);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(5, 150, 105, 0.2);
+      }
+
+      .card-hover {
+        transition: all 0.4s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px -10px rgba(5, 150, 105, 0.3);
+      }
+
+      .gradient-text {
+        background: linear-gradient(135deg, #059669 0%, #0891b2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .leaf {
+        position: absolute;
+        opacity: 0.1;
+        animation: float 20s infinite linear;
+      }
+      @keyframes float {
+        0% { transform: translateY(100vh) rotate(0deg); }
+        100% { transform: translateY(-100px) rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body class="animated-bg min-h-screen">
+    <!-- Subtle eco particles -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+      <i class="leaf text-tac-primary text-4xl fa-solid fa-leaf absolute left-10" style="animation-delay: 0s;"></i>
+      <i class="leaf text-tac-primary text-6xl fa-solid fa-leaf absolute left-32" style="animation-delay: 5s;"></i>
+      <i class="leaf text-tac-primary text-5xl fa-solid fa-leaf absolute right-20" style="animation-delay: 10s;"></i>
+      <i class="leaf text-tac-primary text-7xl fa-solid fa-leaf absolute right-40" style="animation-delay: 15s;"></i>
+    </div>
+
+    <div class="relative z-10">
+      <!-- Hero Section -->
+      <header class="container mx-auto px-6 py-32 text-center">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6">
+          <span class="gradient-text">TaC Engine</span>
+        </h1>
+        <p class="text-xl md:text-3xl text-slate-300 mb-10 max-w-5xl mx-auto leading-relaxed">
+          Advanced AI-Powered Sustainability Verification System<br class="hidden md:block" />
+          Track, Analyze, and Verify Carbon Footprints with Confidence
+        </p>
+
+        <!-- FIXED: Launch Dashboard Button with Smooth Scroll -->
+        <button
+          onclick="document.getElementById('root').scrollIntoView({ behavior: 'smooth', block: 'start' })"
+          class="inline-flex items-center gap-3 bg-tac-primary hover:bg-emerald-600 text-white font-semibold py-5 px-12 rounded-full text-xl transition-all shadow-xl hover:shadow-2xl hover:scale-105 cursor-pointer"
+        >
+          Launch Dashboard
+          <i class="fas fa-arrow-right text-lg"></i>
+        </button>
+      </header>
+
+      <!-- Features Grid -->
+      <section class="container mx-auto px-6 py-20 grid md:grid-cols-3 gap-10">
+        <div class="glass-card card-hover rounded-2xl p-10 text-center">
+          <i class="text-6xl text-tac-primary mb-6 fa-solid fa-chart-line"></i>
+          <h3 class="text-2xl font-semibold mb-4 gradient-text">Real-Time Analytics</h3>
+          <p class="text-slate-300 leading-relaxed">
+            Visualize emissions and sustainability metrics with interactive Recharts dashboards.
+          </p>
+        </div>
+        <div class="glass-card card-hover rounded-2xl p-10 text-center">
+          <i class="text-6xl text-tac-primary mb-6 fa-solid fa-shield-alt"></i>
+          <h3 class="text-2xl font-semibold mb-4 gradient-text">AI Verification</h3>
+          <p class="text-slate-300 leading-relaxed">
+            Leverage Google Gemini AI for accurate, automated sustainability claims validation.
+          </p>
+        </div>
+        <div class="glass-card card-hover rounded-2xl p-10 text-center">
+          <i class="text-6xl text-tac-primary mb-6 fa-solid fa-leaf"></i>
+          <h3 class="text-2xl font-semibold mb-4 gradient-text">Eco Impact Tracking</h3>
+          <p class="text-slate-300 leading-relaxed">
+            Monitor carbon footprints, reductions, and compliance across supply chains.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <!-- React App Mount Point (Login/Onboarding appears here after scroll) -->
+    <div id="root" class="pt-32"></div>
+
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
