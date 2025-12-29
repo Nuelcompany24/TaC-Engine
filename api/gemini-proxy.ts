@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 // Use this import for the latest version
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";  // Changed from GoogleGenerativeAI to GoogleGenAI
 import cors from 'cors';
 
 // Initialize CORS middleware
