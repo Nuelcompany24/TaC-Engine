@@ -3,7 +3,6 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  // Vercel-specific optimizations
   build: {
     outDir: "dist",
     sourcemap: true,
@@ -11,13 +10,13 @@ export default defineConfig({
   define: {
     'process.env': {}
   },
-  // Optional: Add proxy to fix CORS during local development
+  // Only proxy in development
   server: {
     proxy: {
-      "/gemini-api": {
-        target: "https://generativelanguage.googleapis.com",
+      '/api': {
+        target: 'http://localhost:3001',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/gemini-api/, ""),
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },
